@@ -1,18 +1,19 @@
 {
   "name": "blog-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Ümit Ulusoy",
+  "license": "MIT",
+  "description": "A blog site API with TypeScript",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "helmet": "^8.1.0",
     "morgan": "^1.10.0",
     "zod": "^3.24.3"
   },
