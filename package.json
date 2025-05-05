@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --project tsconfig.json src/server.ts",
+    "start": "tsc && node dist/server.js"
   },
   "keywords": [],
   "author": "Ümit Ulusoy",
@@ -15,12 +17,15 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "morgan": "^1.10.0",
+    "ts-node": "^10.9.2",
     "zod": "^3.24.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
   }
 }
