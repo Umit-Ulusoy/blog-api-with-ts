@@ -1,20 +1,17 @@
 import { Router } from 'express';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const router = Router();
 
 const routesPath = __dirname;
+const files = fs.readdirSync(routesPath);
 
-fs.readdirSync(routesPath).forEach((file) => {
-  const isRouteFile = file.endsWith('Route.ts') || file.endsWith('Route.js');
-  const isSelf = file === __filename;
+for (const file of files) {
+  const isRouteFile = file.endsWith('Route.ts');
+  const isSelf = __filename.endsWith(file);
 
-  if (!isRouteFile || isSelf) return;
+  if (!isRouteFile || isSelf) continue;
 
   const fullPath = path.join(routesPath, file);
 
@@ -28,10 +25,9 @@ fs.readdirSync(routesPath).forEach((file) => {
     } else {
       console.warn(`⚠️  Skipped: ${file} - Missing "path" or "router" export.`);
     }
-
   } catch (err: any) {
     console.error(`❌ Error loading ${file}: ${err.message}`);
   }
-});
+}
 
 export default router;
