@@ -18,9 +18,10 @@
       "*": ["node_modules/*", "src/*"],
       "@config/*": ["config/*"],
       "@controllers/*": ["controllers/*"],
+      "@exceptions/*": ["exceptions/*"],
+      "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
-      "@models/*": ["models/*"]
     }
   },
   "include": ["src"],
