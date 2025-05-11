@@ -5,6 +5,7 @@ import path from 'path';
 
 import routes from './routes';
 import errorHandler from '@middlewares/errorHandler';
+import notFoundHandler from '@middlewares/notFoundHandler';
 
 const app = express();
 
@@ -20,12 +21,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // 404 handler
-app.use((req: Request, res: Response) => {
-  res.status(404).json({
-    status: false,
-    message: 'Page not found!',
-  });
-});
+app.use(notFoundHandler);
 
 // global error handler
 app.use(errorHandler);
