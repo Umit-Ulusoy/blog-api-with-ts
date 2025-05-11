@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import path from 'path';
 
 import routes from './routes';
+import errorHandler from '@middlewares/errorHandler';
 
 const app = express();
 
@@ -27,12 +28,6 @@ app.use((req: Request, res: Response) => {
 });
 
 // global error handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error('Global Error:', err.message);
-  res.status(500).json({
-    status: false,
-    message: err.message || 'Internal Server Error'
-});
-});
+app.use(errorHandler);
 
 export default app;

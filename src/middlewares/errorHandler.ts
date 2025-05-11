@@ -1,14 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
 import { ZodError } from 'zod';
 import AppError from '@exceptions/AppError';
 import { env } from '@config/env';
 
-const errorHandler = (
-  err: Error | AppError | ZodError,
+type CustomError = Error | AppError | ZodError;
+
+const errorHandler: ErrorRequestHandler = (
+  err: CustomError,
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   let statusCode = 500;
   let message = 'Internal Server Error';
   let errors = null;
@@ -46,7 +48,8 @@ const errorHandler = (
     errorResponse.stack = err.stack;
   }
 
-  return res.status(statusCode).json(errorResponse);
+  res.status(statusCode)
+  .json(errorResponse);
 };
 
 export default errorHandler;
