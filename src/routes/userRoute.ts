@@ -5,7 +5,14 @@ import { validate } from '@middlewares/validate';
 
 const router = express.Router();
 
-router.post('/', validate(createUserSchema), userController.createUserController);
+router.post(
+  '/',
+  validate(createUserSchema),
+  userController.createUser);
+
+router.delete(
+  '/:userId',
+  userController.deleteUser);
 
 export default {
   path: '/users',

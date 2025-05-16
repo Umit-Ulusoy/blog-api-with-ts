@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as userService from '@services/userService';
 
-// Kullanıcı oluşturma controller'ı
-export const createUserController = async (
+export const createUser = async (
     req: Request,
     res: Response,
 next: NextFunction
@@ -16,6 +15,27 @@ next: NextFunction
       status: true,
       message: 'User created successfully!',
       data: { userId },
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+
+  try {
+    const { userId } = req.params;
+    
+    await userService.deleteUser(userId);
+
+    res.status(200).json({
+      status: true,
+      message: "User deleted successfully!",
     });
 
   } catch (error) {
