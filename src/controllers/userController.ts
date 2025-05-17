@@ -22,6 +22,28 @@ next: NextFunction
   }
 };
 
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+
+  try {
+    const { userId } = req.params;
+    
+    const user = await userService.getUserById(userId);
+
+    res.status(200).json({
+      status: true,
+      message: "User fetched successfully!",
+      data: user
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteUser = async (
   req: Request,
   res: Response,

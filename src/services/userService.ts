@@ -30,6 +30,17 @@ export const createUser = async (data: CreateUserInput) => {
   return user._id;
 };
 
+export const getUserById = async (userId: string) => {
+  
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  return user;
+};
+
 export const deleteUser = async (userId: string) => {
   
   const user = await User.findByIdAndDelete(userId);

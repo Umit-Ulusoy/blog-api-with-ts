@@ -10,6 +10,10 @@ router.post(
   validate(createUserSchema),
   userController.createUser);
 
+  router.get(
+  '/:userId',
+  userController.getUser);
+
 router.delete(
   '/:userId',
   userController.deleteUser);
