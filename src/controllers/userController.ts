@@ -22,6 +22,29 @@ next: NextFunction
   }
   };
 
+  export const getUsers = async (
+    req: Request,
+    res: Response,
+next: NextFunction
+): Promise<void> => {
+
+  try {
+    const filter = req.query;
+
+    const result = await userService.getUsers(filter);
+
+    res.status(200).json({
+      status: true,
+      message: 'Users listed successfully!',
+      meta: result.meta,
+      data: result.data,
+    });
+
+  } catch (error) {
+    next(error);
+  }
+  };
+
 export const getUser = async (
   req: Request,
   res: Response,

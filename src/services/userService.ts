@@ -30,6 +30,33 @@ export const createUser = async (data: CreateUserInput) => {
   return user._id;
 };
 
+export const getUsers = async (query: GetUsersQueryInput) => {
+  const { username, limit = '10', page = '1' } = query;
+
+  const filter: Record<string, any> = {};
+  if (username) {
+    filter.username = { $regex: username, $options: 'i' };
+  }
+
+  const numericLimit = parseInt(limit, 10);
+  const numericPage = parseInt(page, 10);
+  const skip = (numericPage - 1) * numericLimit;
+
+  const [users, total] = await Promise.all([
+    User.find(filter).skip(skip).limit(numericLimit),
+    User.countDocuments(filter),
+  ]);
+
+  return {
+    data: users,
+    meta: {
+      total,
+      page: numericPage,
+      limit: numericLimit,
+      totalPages: Math.ceil(total / numericLimit),
+    },
+  };
+};
 
 export const getUserById = async (userId: string) => {
   

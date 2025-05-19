@@ -11,6 +11,11 @@ router.post(
   userController.createUser);
 
   router.get(
+  '/',
+  validate(getUsersQuerySchema),
+  userController.getUsers);
+
+  router.get(
   '/:userId',
   userController.getUser);
 
