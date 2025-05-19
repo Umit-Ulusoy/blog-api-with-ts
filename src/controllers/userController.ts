@@ -20,7 +20,7 @@ next: NextFunction
   } catch (error) {
     next(error);
   }
-};
+  };
 
 export const getUser = async (
   req: Request,

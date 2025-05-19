@@ -1,18 +1,43 @@
 import { Request, Response, NextFunction } from 'express';
 import { AnyZodObject } from 'zod';
 
-export const validate = (schema: AnyZodObject) => async (
-  req: Request,
+type ValidatedRequest = Request & {
+  validated?: {
+    body?: any;
+    query?: any;
+  };
+};
+
+type SchemaWithOptionalRequest = {
+  body?: AnyZodObject;
+  query?: AnyZodObject;
+};
+
+export const validate = (schema: SchemaWithOptionalRequest) => async (
+  req: ValidatedRequest,
   res: Response,
   next: NextFunction
-): Promise<void> => {
-  const result = await schema.safeParseAsync(req.body);
+) => {
 
-  if (!result.success) {
-    return next(result.error);
+  try {
+    const validated: { body?: any; query?: any } = {};
+
+    if (schema.body) {
+      const result = await schema.body.safeParseAsync(req.body);
+      if (!result.success) return next(result.error);
+      validated.body = result.data;
+    }
+
+    if (schema.query) {
+      const result = await schema.query.safeParseAsync(req.query);
+      if (!result.success) return next(result.error);
+      validated.query = result.data;
+    }
+
+    req.validated = validated;
+
+    next();
+  } catch (err) {
+    next(err);
   }
-
-  req.body = result.data;
-  
-  return next();
 };

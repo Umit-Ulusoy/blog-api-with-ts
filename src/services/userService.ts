@@ -1,6 +1,6 @@
 import User from "@models/User";
 import AppError from '@exceptions/AppError';
-import { CreateUserInput, UpdateUserInput } from '@schemas/userSchema';
+import { CreateUserInput, GetUsersQueryInput, UpdateUserInput } from '@schemas/userSchema';
 
 export const createUser = async (data: CreateUserInput) => {
   const { username, email } = data;
@@ -29,6 +29,7 @@ export const createUser = async (data: CreateUserInput) => {
 
   return user._id;
 };
+
 
 export const getUserById = async (userId: string) => {
   
