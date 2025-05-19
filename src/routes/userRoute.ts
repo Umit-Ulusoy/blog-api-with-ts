@@ -19,6 +19,10 @@ router.post(
   '/:userId',
   userController.getUser);
 
+    router.put(
+  '/:userId',
+  userController.updateUser);
+
 router.delete(
   '/:userId',
   userController.deleteUser);

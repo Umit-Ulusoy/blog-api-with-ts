@@ -43,7 +43,10 @@ export const getUsers = async (query: GetUsersQueryInput) => {
   const skip = (numericPage - 1) * numericLimit;
 
   const [users, total] = await Promise.all([
-    User.find(filter).skip(skip).limit(numericLimit),
+    User.find(filter)
+    .skip(skip)
+    .limit(numericLimit)
+    .sort('-createdAt'),
     User.countDocuments(filter),
   ]);
 
@@ -67,6 +70,17 @@ export const getUserById = async (userId: string) => {
   }
 
   return user;
+};
+
+export const updateUserById = async (userId: string, userData: UpdateUserInput) => {
+  
+  const user = await User.findByIdAndUpdate(userId, userData);
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  return true;
 };
 
 export const deleteUser = async (userId: string) => {

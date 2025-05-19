@@ -67,6 +67,30 @@ export const getUser = async (
   }
 };
 
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+
+  try {
+    const { userId } = req.params;
+    const userData = req.body;
+    console.log(userData);
+    
+    
+    await userService.updateUserById(userId, userData);
+
+    res.status(200).json({
+      status: true,
+      message: "User updated successfully!",
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteUser = async (
   req: Request,
   res: Response,
