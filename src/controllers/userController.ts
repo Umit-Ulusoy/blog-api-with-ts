@@ -7,7 +7,7 @@ export const createUser = async (
 next: NextFunction
 ): Promise<void> => {
   try {
-    const userData = req.body;
+    const userData = req.validated!.body;
 
     const userId = await userService.createUser(userData);
 
@@ -29,7 +29,7 @@ next: NextFunction
 ): Promise<void> => {
 
   try {
-    const filter = req.query;
+    const filter = req.validated!.query;
 
     const result = await userService.getUsers(filter);
 
@@ -75,9 +75,7 @@ export const updateUser = async (
 
   try {
     const { userId } = req.params;
-    const userData = req.body;
-    console.log(userData);
-    
+    const userData = req.validated!.body;
     
     await userService.updateUserById(userId, userData);
 
