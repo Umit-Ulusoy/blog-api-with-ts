@@ -1,6 +1,6 @@
 import express from 'express';
 import * as userController from '@controllers/userController';
-import { createUserSchema, getUsersQuerySchema } from '@schemas/userSchema';
+import { createUserSchema, getUsersQuerySchema, updateUserSchema } from '@schemas/userSchema';
 import { validate } from '@middlewares/validate';
 
 const router = express.Router();
@@ -21,6 +21,7 @@ router.post(
 
     router.put(
   '/:userId',
+    validate(updateUserSchema),
   userController.updateUser);
 
 router.delete(

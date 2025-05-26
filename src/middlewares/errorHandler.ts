@@ -29,6 +29,7 @@ const errorHandler: ErrorRequestHandler = (
   else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
+    errors = err.getErrors();
   }
 
   else {
