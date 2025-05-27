@@ -21,3 +21,23 @@ export const createCategory = async (
   }
 };
 
+export const getCategories = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    
+  try {
+
+    const categories = await categoryService.getCategories();
+
+    res.json({
+        status: true,
+        message: "Categories listed successfully.",
+        data: categories
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+

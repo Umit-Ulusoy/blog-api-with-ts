@@ -11,6 +11,11 @@ router.post(
     categoryController.createCategory)
     ;
 
+    router.get(
+    "/",
+    categoryController.getCategories)
+    ;
+
     export default {
         path: "/categories",
         router

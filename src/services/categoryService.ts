@@ -21,3 +21,11 @@ export const createCategory = async (data: CreateCategoryInput) => {
   return true;
 };
 
+export const getCategories = async () => {
+
+    const categories = Category.find()
+    .sort("-createdAt");
+
+  return categories;
+};
+
