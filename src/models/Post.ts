@@ -25,7 +25,6 @@ const postSchema = new Schema<IPost>(
     },
     slug: {
       type: String,
-      required: true,
       unique: true,
       lowercase: true,
       trim: true,

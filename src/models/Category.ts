@@ -13,11 +13,10 @@ const categorySchema = new Schema<ICategory>(
         required: true,
         unique: true,
         trim: true,
-        lower: true
+        lowercase: true
     },
     slug: {
         type: String,
-        required: true,
         unique: true
     },
   },
