@@ -9,7 +9,7 @@ export const createCategory = async (
 
   try {
 
-    await categoryService.createCategory(req.body);
+    await categoryService.createCategory(req.validated!.body);
 
     res.status(201)
     .json({
@@ -26,7 +26,7 @@ export const getCategories = async (
     res: Response,
     next: NextFunction
 ) => {
-    
+
   try {
 
     const categories = await categoryService.getCategories();
@@ -35,6 +35,27 @@ export const getCategories = async (
         status: true,
         message: "Categories listed successfully.",
         data: categories
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateCategory = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+
+  try {
+
+    const { categoryId } = req.params;
+    const categoryData = req.validated!.body;
+
+    await categoryService.updateCategoryById(categoryId, categoryData);
+    res.json({
+      status: true,
+      message: "Category updated successfully."
     });
   } catch (err) {
     next(err);
