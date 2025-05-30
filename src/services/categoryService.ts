@@ -66,3 +66,16 @@ await category.save();
   return true;
 };
 
+export const deleteCategoryById = async (categoryId: string) => {
+
+  const deletedCategory = await Category.findByIdAndDelete(categoryId);
+
+  if (!deletedCategory) {
+    throw new AppError(
+      "Category not found",
+      404
+    );
+  }
+
+  return true;
+};

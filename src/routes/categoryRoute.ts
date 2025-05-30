@@ -22,6 +22,11 @@ router.post(
     categoryController.updateCategory)
     ;
 
+            router.delete(
+    "/:categoryId",
+    categoryController.deleteCategory)
+    ;
+
     export default {
         path: "/categories",
         router
