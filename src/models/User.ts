@@ -33,9 +33,6 @@ const userSchema = new Schema<IUser>(
       required: true,
       minlength: 8,
     },
-    jti: {
-      type: String
-    }
   },
   {
     timestamps: true,
