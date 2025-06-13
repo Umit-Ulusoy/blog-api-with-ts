@@ -15,17 +15,17 @@ const envSchema = z.object({
 
   MONGODB_URI: z.string(),
 
-  JWT_SECRET: z.string().min(10, {
-    message: "JWT_SECRET must be at least 10 characters",
+  JWT_ACCESS_TOKEN_SECRET: z.string().min(10, {
+    message: "JWT_ACCESS_TOKEN_SECRET must be at least 10 characters",
   }),
 
-  JWT_EXPIRES_IN: z.string(),
+  JWT_ACCESS_TOKEN_EXPIRES_IN: z.string(),
 
-  JWT_REFRESH_SECRET: z.string().min(10, {
-    message: "JWT_REFRESH_SECRET must be at least 10 characters",
+  JWT_REFRESH_TOKEN_SECRET: z.string().min(10, {
+    message: "JWT_REFRESH_TOKEN_SECRET must be at least 10 characters",
   }),
 
-  JWT_REFRESH_EXPIRES_IN: z.string(),
+  JWT_REFRESH_TOKEN_EXPIRES_IN: z.string(),
 
   SMTP_HOST: z.string(),
   SMTP_PORT: z
