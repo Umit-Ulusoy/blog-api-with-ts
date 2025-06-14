@@ -27,3 +27,30 @@ export const createRefreshToken = (userId: string, jti: string) => {
   );
 };
 
+export const verifyAccessToken = (token: string) => {
+  try {
+    return jwt.verify(
+        token,
+        JWT_ACCESS_TOKEN_SECRET
+    );
+  } catch (error: any) {
+    throw new AppError('Authentication Error', 403)
+    .setErrors([
+      { field: 'token', message: 'Invalid token' }
+    ]);
+  }
+};
+
+export const verifyRefreshToken = (token: string) => {
+  try {
+    return jwt.verify(
+        token,
+        JWT_REFRESH_TOKEN_SECRET
+    );
+  } catch (error: any) {
+    throw new AppError('Authentication Error', 403)
+    .setErrors([
+      { field: 'token', message: 'Invalid token' }
+    ]);
+  }
+};
