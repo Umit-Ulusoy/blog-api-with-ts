@@ -23,7 +23,15 @@ export const saveToken = async ({
 };
  
 export const clearTokenByJTI = async (jti: string) => {
+  
 await Token.deleteOne({ jti });
+
+return true;
+}
+
+export const clearAllTokensByUser = async (userId: string) => {
+
+await Token.deleteMany({ userId });
 
 return true;
 }
