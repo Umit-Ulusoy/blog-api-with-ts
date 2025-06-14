@@ -18,5 +18,12 @@ export const saveToken = async ({
     jti,
     expiresAt
   });
+
+  return true;
 };
  
+export const clearTokenByJTI = async (jti: string) => {
+await Token.deleteOne({ jti });
+
+return true;
+}
