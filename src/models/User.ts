@@ -1,15 +1,21 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Model } from "mongoose";
 import bcrypt from "bcryptjs";
 
 export interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  jti?: string;
   createdAt?: Date;
   updatedAt?: Date;
 
   matchPassword(enteredPassword: string): Promise<boolean>;
+}
+
+export interface IUserModel extends Model<IUser> {
+  isUserExist(
+    username: string,
+    email: string
+  ): Promise<{ isUsernameTaken: boolean; isEmailTaken: boolean }>;
 }
 
 const userSchema = new Schema<IUser>(
@@ -52,6 +58,27 @@ userSchema.methods.matchPassword = async function (
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const User = model<IUser>("User", userSchema);
+userSchema.statics.isUserExist = async function (
+  username: string,
+  email: string
+): Promise<{ isUsernameTaken: boolean; isEmailTaken: boolean }> {
+  
+  const normalizedUsername = username.trim().toLowerCase();
+  const normalizedEmail = email.trim().toLowerCase();
+
+  const existingUser = await this.findOne({
+    $or: [
+      { username: { $regex: `^${normalizedUsername}$`, $options: "i" } },
+      { email: { $regex: `^${normalizedEmail}$`, $options: "i" } },
+    ],
+  });
+
+  return {
+    isUsernameTaken: existingUser?.username?.toLowerCase() === normalizedUsername,
+    isEmailTaken: existingUser?.email?.toLowerCase() === normalizedEmail,
+  };
+};
+
+const User = model<IUser, IUserModel>("User", userSchema);
 
 export default User;

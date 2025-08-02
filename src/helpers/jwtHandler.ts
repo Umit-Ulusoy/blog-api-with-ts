@@ -54,3 +54,17 @@ export const verifyRefreshToken = (token: string) => {
     ]);
   }
 };
+
+export const decodeToken = (token: string) => {
+  return jwt.decode(token);
+};
+
+export const getExpirationDate = (token: string) => {
+  const decoded = decodeToken(token) as {
+    exp: number
+  };
+
+  const expirationDate = new Date(decoded.exp * 1000);
+
+  return expirationDate;
+};

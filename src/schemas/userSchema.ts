@@ -8,6 +8,14 @@ export const createUserSchema = {
   }),
 };
 
+export const registerUserSchema = {
+  body: z.object({
+    username: z.string().min(3),
+    email: z.string().email(),
+    password: z.string().min(8),
+  }),
+};
+
 export const updateUserSchema = {
   body: z.object({
     username: z.string().min(3).optional(),
@@ -25,5 +33,6 @@ export const getUsersQuerySchema = {
 };
 
 export type CreateUserInput = z.infer<typeof createUserSchema.body>;
+export type RegisterUserInput = z.infer<typeof registerUserSchema.body>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema.body>;
 export type GetUsersQueryInput = z.infer<typeof getUsersQuerySchema.query>;
