@@ -1,10 +1,10 @@
 import User from "@models/User";
-import { RegisterUserInput } from "@schemas/userSchema";
+import { RegisterUserInput, LoginUserInput } from "@schemas/authSchema";
 import * as tokenService from "@services/tokenService";
 import AppError from "@exceptions/AppError";
 
 export const registerUser = async (data: RegisterUserInput) => {
-  const { username, email, password } = data;
+    const { username, email, password } = data;
 
   const errors: { field: string; message: string; }[] = [];
 
@@ -36,3 +36,26 @@ const { accessToken, refreshToken } = await tokenService.createAuthTokens(newUse
   };
 };
 
+
+export const loginUser = async (data: LoginUserInput) => {
+  const { emailOrUsername, password } = data;
+
+  const user = await User.findOne({
+    $or: [{ username: emailOrUsername }, { email: emailOrUsername }]
+  });
+
+  const isValid = user && (await user.matchPassword(password!));
+
+  if (!isValid) {
+    throw new AppError("Invalid credentials", 401);
+  }
+
+  const { accessToken, refreshToken } = await tokenService.createAuthTokens(
+    user._id as string
+  );
+
+  return {
+    accessToken,
+    refreshToken
+  };
+};

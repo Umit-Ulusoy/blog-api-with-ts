@@ -14,7 +14,30 @@ export const registerUser = async (
     res.status(201)
     .json({
         status: true,
-        message: "user registered successfully.",
+        message: "User registered successfully.",
+        data
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
+export const loginUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+
+  try {
+
+    const data = await authService.loginUser(req.validated!.body);
+
+    res.status(200)
+    .json({
+        status: true,
+        message: "User logged in successfully.",
         data
     });
   } catch (err) {
