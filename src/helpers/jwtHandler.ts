@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import AppError from "@exceptions/AppError";
 import { env } from "@config/env";
 
@@ -55,8 +55,8 @@ export const verifyRefreshToken = (token: string) => {
   }
 };
 
-export const decodeToken = (token: string) => {
-  return jwt.decode(token);
+export const decodeToken = (token: string): JwtPayload => {
+  return jwt.decode(token) as JwtPayload;
 };
 
 export const getExpirationDate = (token: string) => {
