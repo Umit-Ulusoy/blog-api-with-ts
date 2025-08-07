@@ -3,6 +3,7 @@ import { Schema, model, Document } from "mongoose";
 export interface IToken extends Document {
   userId: Schema.Types.ObjectId;
   jti: string;
+    type: 'access' | 'refresh';
   createdAt: Date;
   expiresAt: Date;
 }
@@ -18,6 +19,11 @@ const tokenSchema = new Schema<IToken>(
       type: String,
       required: true,
       unique: true,
+    },
+        type: {
+      type: String,
+      enum: ['access', 'refresh'],
+      required: true,
     },
     createdAt: {
       type: Date,

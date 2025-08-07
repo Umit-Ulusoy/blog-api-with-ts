@@ -4,7 +4,8 @@ import * as tokenService from "@services/tokenService";
 import * as emailService from "@services/emailService";
 import * as jwtHelper from "@helpers/jwtHandler";
 import AppError from "@exceptions/AppError";
-import { log } from "console";
+import { buildWelcomeEmail } from "@views/emails/welcomeEmail";
+import { env } from "@config/env";
 
 export const registerUser = async (data: RegisterUserInput) => {
     const { username, email, password } = data;
@@ -31,17 +32,9 @@ export const registerUser = async (data: RegisterUserInput) => {
   
   const newUser = await User.create(data);
 
-  const html = `
-  <pre>
-  Hello there dear ${newUser.username},
-  
-  thanks for registration to BurMit - My Blog.
-  
-  To complete your registration, please verify your email by clicking the link below.
-  
-  <a role='button' href='https://burmit.blog/auth/verify-email/asdfasfsafd'>Verify My Email</a>
-  </pre>
-  `;
+  const link = `${env.APP_URL}/api/auth/verify-email/jkKDSFJLkDFDS`
+
+  const html = await buildWelcomeEmail(username, link)
 
   await emailService.sendEmail({
     to: newUser.email,
@@ -85,5 +78,7 @@ export const logoutUser = async (tokenData: string) => {
 
   const token = await jwtHelper.decodeToken(tokenData);
 
-  await tokenService.clearTokenByJTI(token.jti!)
+  await tokenService.clearTokenByJTI(token.jti!);
+
+  return true;
 }

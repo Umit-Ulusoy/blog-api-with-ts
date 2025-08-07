@@ -11,7 +11,11 @@ const envSchema = z.object({
       message: "APP_PORT must be a valid integer",
     }),
 
-  APP_ENV: z.enum(["development", "production"]),
+    APP_ENV: z.enum(["development", "production"]),
+
+  APP_URL: z
+    .string()
+    .url(),
 
   MONGODB_URI: z.string(),
 

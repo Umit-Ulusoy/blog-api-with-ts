@@ -25,6 +25,7 @@
       "@routes/*": ["routes/*"],
       "@schemas/*": ["schemas/*"],
       "@services/*": ["services/*"],
+      "@views/*": ["views/*"],
     }
   },
   "include": [

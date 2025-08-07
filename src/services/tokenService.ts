@@ -6,18 +6,21 @@ import AppError from "@exceptions/AppError";
 type TokenData = {
   userId: string;
   jti: string;
+  type: 'access' | 'refresh';
   expiresAt: Date;
 };
 
 export const saveToken = async ({
   userId,
   jti,
+  type,
   expiresAt
 }: TokenData) => {
   
   await Token.create({
     userId,
     jti,
+    type,
     expiresAt
   });
 
@@ -48,6 +51,7 @@ const expiresAt = await jwtHelper.getExpirationDate(token);
 await saveToken({
   userId,
   jti,
+  type: 'access',
   expiresAt
 });
 
@@ -64,6 +68,7 @@ const expiresAt = await jwtHelper.getExpirationDate(token);
 await saveToken({
   userId,
   jti,
+  type: 'refresh',
   expiresAt
 });
 
