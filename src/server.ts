@@ -1,3 +1,4 @@
+import 'clean-error-stack/register';
 import { env } from '@config/env';
 import app from './app';
 import { connectDatabase } from './database/connection';
